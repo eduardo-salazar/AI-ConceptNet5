@@ -1,4 +1,4 @@
-package com.ai.contentnet5.services;
+package com.ai.conceptnet5.services;
 import java.io.IOException;
 
 import org.apache.http.client.fluent.Content;

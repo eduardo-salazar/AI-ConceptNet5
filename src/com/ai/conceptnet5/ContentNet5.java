@@ -1,4 +1,4 @@
-package com.ai.contentnet5;
+package com.ai.conceptnet5;
 
 /**
  * Created by eduardosalazar1 on 11/18/15.

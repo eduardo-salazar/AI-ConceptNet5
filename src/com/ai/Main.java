@@ -1,5 +1,5 @@
 package com.ai;
-import com.ai.contentnet5.services.Search;
+import com.ai.conceptnet5.services.Search;
 
 import java.io.IOException;
 
