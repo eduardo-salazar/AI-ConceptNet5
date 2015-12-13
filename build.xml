@@ -109,18 +109,6 @@
     <pathelement location="${basedir}/../../Downloads/httpcomponents-client-4.5.1/lib/jna-4.1.0.jar"/>
     <pathelement location="${basedir}/../../Downloads/httpcomponents-client-4.5.1/lib/jna-platform-4.1.0.jar"/>
   </path>
-  <!-- Register Custom Compiler Taskdefs -->
-  <property name="javac2.home" value="${idea.home}/lib"/>
-  <path id="javac2.classpath">
-    <pathelement location="${javac2.home}/javac2.jar"/>
-    <pathelement location="${javac2.home}/jdom.jar"/>
-    <pathelement location="${javac2.home}/asm-all.jar"/>
-    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
-  </path>
-  <target name="register.custom.compilers">
-    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
-  </target>
   
   <!-- Modules -->
   
@@ -179,6 +167,40 @@
     <exclude name="out/**"/>
     <exclude name="out/test/**"/>
     <exclude name="out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/com/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/com/ai/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/com/ai/model/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/conceptnet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/com/ai/conceptnet5/services/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
+    <exclude name="out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/.idea/libraries/**"/>
     <exclude name="out/production/**"/>
     <exclude name="out/production/AI-ContentNet5/**"/>
     <exclude name="out/production/AI-ContentNet5/com/**"/>
@@ -210,15 +232,15 @@
   
   <target name="compile.module.ai-contentnet5" depends="compile.module.ai-contentnet5.production,test" description="Compile module AI-ContentNet5"/>
   
-  <target name="compile.module.ai-contentnet5.production" depends="register.custom.compilers" description="Compile module AI-ContentNet5; production classes">
+  <target name="compile.module.ai-contentnet5.production" description="Compile module AI-ContentNet5; production classes">
     <mkdir dir="${ai-contentnet5.output.dir}"/>
-    <javac2 destdir="${ai-contentnet5.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
+    <javac destdir="${ai-contentnet5.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
       <compilerarg line="${compiler.args.ai-contentnet5}"/>
       <bootclasspath refid="ai-contentnet5.module.bootclasspath"/>
       <classpath refid="ai-contentnet5.module.production.classpath"/>
       <src refid="ai-contentnet5.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.ai-contentnet5"/>
-    </javac2>
+    </javac>
     
     <copy todir="${ai-contentnet5.output.dir}">
       <fileset dir="${module.ai-contentnet5.basedir}/src">
@@ -228,15 +250,15 @@
     </copy>
   </target>
   
-  <target name="test" depends="register.custom.compilers,compile.module.ai-contentnet5.production" description="compile module AI-ContentNet5; test classes" unless="skip.tests">
+  <target name="test" depends="compile.module.ai-contentnet5.production" description="compile module AI-ContentNet5; test classes" unless="skip.tests">
     <mkdir dir="${ai-contentnet5.testoutput.dir}"/>
-    <javac2 destdir="${ai-contentnet5.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
+    <javac destdir="${ai-contentnet5.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
       <compilerarg line="${compiler.args.ai-contentnet5}"/>
       <bootclasspath refid="ai-contentnet5.module.bootclasspath"/>
       <classpath refid="ai-contentnet5.module.classpath"/>
       <src refid="ai-contentnet5.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.ai-contentnet5"/>
-    </javac2>
+    </javac>
     
     <copy todir="${ai-contentnet5.testoutput.dir}">
       <fileset dir="${module.ai-contentnet5.basedir}/test">
