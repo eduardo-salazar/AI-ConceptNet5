@@ -179,16 +179,6 @@
     <exclude name="out/**"/>
     <exclude name="out/test/**"/>
     <exclude name="out/test/AI-ContentNet5/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/com/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/com/ai/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/com/ai/model/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/conceptnet5/**"/>
-    <exclude name="out/test/AI-ContentNet5/com/ai/conceptnet5/services/**"/>
-    <exclude name="out/test/AI-ContentNet5/.idea/**"/>
-    <exclude name="out/test/AI-ContentNet5/.idea/copyright/**"/>
-    <exclude name="out/test/AI-ContentNet5/.idea/libraries/**"/>
     <exclude name="out/production/**"/>
     <exclude name="out/production/AI-ContentNet5/**"/>
     <exclude name="out/production/AI-ContentNet5/com/**"/>
@@ -196,8 +186,8 @@
     <exclude name="out/production/AI-ContentNet5/com/ai/com/**"/>
     <exclude name="out/production/AI-ContentNet5/com/ai/com/ai/**"/>
     <exclude name="out/production/AI-ContentNet5/com/ai/com/ai/model/**"/>
-    <exclude name="out/production/AI-ContentNet5/com/ai/contentnet5/**"/>
-    <exclude name="out/production/AI-ContentNet5/com/ai/contentnet5/services/**"/>
+    <exclude name="out/production/AI-ContentNet5/com/ai/conceptnet5/**"/>
+    <exclude name="out/production/AI-ContentNet5/com/ai/conceptnet5/services/**"/>
   </patternset>
   
   <patternset id="excluded.from.compilation.ai-contentnet5">
@@ -218,7 +208,7 @@
   </path>
   
   
-  <target name="compile.module.ai-contentnet5" depends="compile.module.ai-contentnet5.production,compile.module.ai-contentnet5.tests" description="Compile module AI-ContentNet5"/>
+  <target name="compile.module.ai-contentnet5" depends="compile.module.ai-contentnet5.production,test" description="Compile module AI-ContentNet5"/>
   
   <target name="compile.module.ai-contentnet5.production" depends="register.custom.compilers" description="Compile module AI-ContentNet5; production classes">
     <mkdir dir="${ai-contentnet5.output.dir}"/>
@@ -238,7 +228,7 @@
     </copy>
   </target>
   
-  <target name="compile.module.ai-contentnet5.tests" depends="register.custom.compilers,compile.module.ai-contentnet5.production" description="compile module AI-ContentNet5; test classes" unless="skip.tests">
+  <target name="test" depends="register.custom.compilers,compile.module.ai-contentnet5.production" description="compile module AI-ContentNet5; test classes" unless="skip.tests">
     <mkdir dir="${ai-contentnet5.testoutput.dir}"/>
     <javac2 destdir="${ai-contentnet5.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
       <compilerarg line="${compiler.args.ai-contentnet5}"/>
