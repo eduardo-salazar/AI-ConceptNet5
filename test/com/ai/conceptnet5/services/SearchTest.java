@@ -34,6 +34,6 @@ public class SearchTest {
     @Test
     public void testAssertThatCallConstainsString() throws Exception {
         String result = seachObj.call().toString();
-        assertThat(result,containsString("edges"));
+        assertThat(result,containsString("edgasdfasdfsdfes"));
     }
 }
