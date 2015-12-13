@@ -1,4 +1,4 @@
-# AI-ConceptNet
+# AI-ConceptNet [![Build Status](https://travis-ci.org/eduardo-salazar/AI-ConceptNet5.svg)](https://travis-ci.org/eduardo-salazar/AI-ConceptNet5)
 
 ## Description
 

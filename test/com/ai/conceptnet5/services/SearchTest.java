@@ -33,7 +33,7 @@ public class SearchTest {
 
     @Test
     public void testAssertThatCallConstainsString() throws Exception {
-        String result = seachObj.call().toString();
+        String result = new Search("teacher","").call().toString();
         assertThat(result,containsString("edgasdfasdfsdfes"));
     }
 }
