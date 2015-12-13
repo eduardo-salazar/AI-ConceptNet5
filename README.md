@@ -14,3 +14,7 @@ version of CONCEPTNET5 (common sense ontology) and english language grammar.
 
 ## API
 
+## Example
+
+- Just run the main java file
+
