@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ai-contentnet5" default="all">
+<project name="ai-contentnet5" default="test" basedir=".">
   
   
   <property file="build.properties"/>
@@ -228,62 +228,60 @@
       <include name="AI-ContentNet5"/>
     </dirset>
   </path>
-  
-  
-  <target name="compile.module.ai-contentnet5" depends="compile.module.ai-contentnet5.production,test" description="Compile module AI-ContentNet5"/>
-  
-  <target name="compile.module.ai-contentnet5.production" description="Compile module AI-ContentNet5; production classes">
-    <mkdir dir="${ai-contentnet5.output.dir}"/>
-    <javac destdir="${ai-contentnet5.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
-      <compilerarg line="${compiler.args.ai-contentnet5}"/>
-      <bootclasspath refid="ai-contentnet5.module.bootclasspath"/>
-      <classpath refid="ai-contentnet5.module.production.classpath"/>
-      <src refid="ai-contentnet5.module.sourcepath"/>
-      <patternset refid="excluded.from.compilation.ai-contentnet5"/>
+
+
+  <property name="main.build.dir" value="build/main" />
+  <property name="main.src.dir" value="src" />
+  <property name="test.build.dir" value="build/test" />
+  <property name="test.src.dir" value="test" />
+
+  <path id="classpath.base" />
+
+  <path id="classpath.test">
+    <pathelement location="lib/junit-4.11.jar" />
+    <pathelement location="lib/hamcrest-core-1.3.jar" />
+    <pathelement location="${main.build.dir}"/>
+    <path refid="classpath.base" />
+  </path>
+
+  <target name="test" depends="run, clean" />
+
+  <target name="compile">
+    <mkdir dir="${main.build.dir}"/>
+    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false">
+      <classpath refid="classpath.base"/>
     </javac>
-    
-    <copy todir="${ai-contentnet5.output.dir}">
-      <fileset dir="${module.ai-contentnet5.basedir}/src">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
   </target>
-  
-  <target name="test" depends="compile.module.ai-contentnet5.production" description="compile module AI-ContentNet5; test classes" unless="skip.tests">
-    <mkdir dir="${ai-contentnet5.testoutput.dir}"/>
-    <javac destdir="${ai-contentnet5.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ai-contentnet5}/javac">
-      <compilerarg line="${compiler.args.ai-contentnet5}"/>
-      <bootclasspath refid="ai-contentnet5.module.bootclasspath"/>
-      <classpath refid="ai-contentnet5.module.classpath"/>
-      <src refid="ai-contentnet5.module.test.sourcepath"/>
-      <patternset refid="excluded.from.compilation.ai-contentnet5"/>
+
+  <target name="build" depends="compile">
+    <mkdir dir="${test.build.dir}"/>
+    <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+      <classpath refid="classpath.test"/>
     </javac>
-    
-    <copy todir="${ai-contentnet5.testoutput.dir}">
-      <fileset dir="${module.ai-contentnet5.basedir}/test">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-      <fileset dir="${module.ai-contentnet5.basedir}">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
-    </copy>
+    <echo message="Build done" />
   </target>
-  
-  <target name="clean.module.ai-contentnet5" description="cleanup module">
-    <delete dir="${ai-contentnet5.output.dir}"/>
-    <delete dir="${ai-contentnet5.testoutput.dir}"/>
+
+  <!-- Test and build all files  -->
+  <!-- To run this: use "ant" (default) or "ant run" -->
+  <target name="run" depends="build">
+    <junit printsummary="on" haltonfailure="yes">
+      <classpath>
+        <path refid="classpath.test" />
+        <pathelement location="${test.build.dir}"/>
+      </classpath>
+      <formatter type="brief" usefile="false" />
+      <batchtest>
+        <fileset dir="${test.src.dir}" includes="**/*Test*.java" />
+      </batchtest>
+    </junit>
   </target>
-  
-  <target name="init" description="Build initialization">
-    <!-- Perform any build initialization in this target -->
+
+  <!-- delete all class files -->
+  <!-- To run this: use "ant clean" -->
+  <target name="clean">
+    <delete>
+      <fileset dir="${basedir}" includes="**/*.class" />
+    </delete>
+    <echo message="clean done" />
   </target>
-  
-  <target name="clean" depends="clean.module.ai-contentnet5" description="cleanup all"/>
-  
-  <target name="build.modules" depends="init, clean, compile.module.ai-contentnet5" description="build all modules"/>
-  
-  <target name="all" depends="build.modules" description="build all"/>
 </project>
