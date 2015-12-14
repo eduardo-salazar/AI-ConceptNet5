@@ -173,13 +173,13 @@
   </patternset>
   
   <path id="ai-contentnet5.module.sourcepath">
-    <dirset dir="${module.ai-contentnet5.basedir}/../../IdeaProjects">
+    <dirset dir="${module.ai-contentnet5.basedir}/eduardo-salazar">
       <include name="AI-ContentNet5/src"/>
     </dirset>
   </path>
   
   <path id="ai-contentnet5.module.test.sourcepath">
-    <dirset dir="${module.ai-contentnet5.basedir}/../../IdeaProjects">
+    <dirset dir="${module.ai-contentnet5.basedir}/eduardo-salazar">
       <include name="AI-ContentNet5/test"/>
       <include name="AI-ContentNet5"/>
     </dirset>
