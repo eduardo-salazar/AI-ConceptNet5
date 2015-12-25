@@ -9,7 +9,7 @@ public class Main {
 	// write your code her
         System.out.println("Testing first concept net call");
         try {
-            System.out.println(new Search("teacher","").call().toString());
+            System.out.println(new Search("teacher","").call());
         } catch (IOException e) {
             System.out.println("Error getting response:");
             e.printStackTrace();

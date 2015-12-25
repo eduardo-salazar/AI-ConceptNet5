@@ -1,11 +1,15 @@
 package com.ai.conceptnet5.services;
 import java.io.IOException;
+import java.util.List;
 
+import com.ai.conceptnet5.Relation;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 
 /**
  * Created by eduardosalazar1 on 12/13/15.
+ * This class has the call to the api using search function of concept net.
+ * In must cases it will return an object of type Relation.
  */
 public class Search {
 
@@ -35,14 +39,15 @@ public class Search {
         return "/c/en/"+node;
     }
 
-    public Content call() throws IOException {
+    public List<Relation> call() throws IOException {
         // The fluent API relieves the user from having to deal with manual deallocation of system
         // resources at the cost of having to buffer response content in memory in some case
         String uri = SEARCHENDPOINT+start+'&'+end;
         System.out.println("Trying to request "+ uri);
-        response = Request.Get(uri).execute().returnContent();
-        return response;
+        String response = Request.Get(uri).execute().returnContent().toString();
+        return Helper.parseResult(response);
     }
+
 
 
 }

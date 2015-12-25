@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ai-contentnet5" default="compile.module.ai-contentnet5.tests" basedir=".">
+<project name="ai-contentnet5" default="all">
   
   
   <property file="build.properties"/>
@@ -89,32 +89,27 @@
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
   
-  <path id="ai-contentnet5.module.production.classpath">
-    <path refid="library.commons-codec-1.9.classpath"/>
-    
-  </path>
+  <path id="ai-contentnet5.module.production.classpath"/>
   
   <path id="ai-contentnet5.runtime.production.module.classpath">
-    <pathelement location="${ai-contentnet5.output.dir}"/>
     <path refid="library.commons-codec-1.9.classpath"/>
     
+    <pathelement location="${ai-contentnet5.output.dir}"/>
   </path>
   
   <path id="ai-contentnet5.module.classpath">
-    <pathelement location="${ai-contentnet5.output.dir}"/>
-    <path refid="library.commons-codec-1.9.classpath"/>
-    
     <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${ai-contentnet5.output.dir}"/>
   </path>
   
   <path id="ai-contentnet5.runtime.module.classpath">
-    <pathelement location="${ai-contentnet5.testoutput.dir}"/>
-    <pathelement location="${ai-contentnet5.output.dir}"/>
     <path refid="library.commons-codec-1.9.classpath"/>
     
     <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
     <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+    <pathelement location="${ai-contentnet5.testoutput.dir}"/>
+    <pathelement location="${ai-contentnet5.output.dir}"/>
   </path>
   
   
@@ -142,6 +137,12 @@
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/**"/>
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/**"/>
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
+    <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/**"/>
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/copyright/**"/>
     <exclude name="out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/out/test/AI-ContentNet5/.idea/libraries/**"/>
@@ -173,13 +174,13 @@
   </patternset>
   
   <path id="ai-contentnet5.module.sourcepath">
-    <dirset dir="${module.ai-contentnet5.basedir}/eduardo-salazar">
+    <dirset dir="${module.ai-contentnet5.basedir}/../../IdeaProjects">
       <include name="AI-ContentNet5/src"/>
     </dirset>
   </path>
   
   <path id="ai-contentnet5.module.test.sourcepath">
-    <dirset dir="${module.ai-contentnet5.basedir}/eduardo-salazar">
+    <dirset dir="${module.ai-contentnet5.basedir}/../../IdeaProjects">
       <include name="AI-ContentNet5/test"/>
       <include name="AI-ContentNet5"/>
     </dirset>
