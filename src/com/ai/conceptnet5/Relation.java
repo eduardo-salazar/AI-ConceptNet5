@@ -88,6 +88,7 @@ public class Relation {
 //                ", weight=" + weight +
 //                '}';
 
-        return surfaceStart + " -> " + rel + " -> " + surfaceEnd;
+        return surfaceStart + " -> " + rel + " -> " + surfaceEnd + " | "+ surfaceText;
+        //return surfaceText.replaceAll("\\[","").replaceAll("\\]","");
     }
 }
