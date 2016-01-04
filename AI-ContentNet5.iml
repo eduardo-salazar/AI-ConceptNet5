@@ -154,5 +154,18 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/opennlg" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/opennlg" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/lib/opennlg" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/lib/opennlg" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
