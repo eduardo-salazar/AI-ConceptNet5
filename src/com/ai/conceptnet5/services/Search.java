@@ -29,14 +29,24 @@ public class Search {
 
 
     public void setStart(String start) {
-        this.start = "start="+conceptPath(start);
-        this.start2 = "start="+start;
+        if(start != "") {
+            this.start = "start=" + conceptPath(start);
+            this.start2 = "start=" + start;
+        }else{
+            this.start = "";
+            this.start2 = "";
+        }
     }
 
 
     public void setEnd(String end) {
-        this.end = "end="+conceptPath(end);
-        this.end2 = "end="+end;
+        if(end != "") {
+            this.end = "end=" + conceptPath(end);
+            this.end2 = "end=" + end;
+        }else{
+            this.end = "";
+            this.end2 ="";
+        }
     }
 
     private String conceptPath(String node){
@@ -46,7 +56,7 @@ public class Search {
     public List<Relation> call() throws IOException {
         // The fluent API relieves the user from having to deal with manual deallocation of system
         // resources at the cost of having to buffer response content in memory in some case
-        String uri = SEARCHENDPOINT+start+'&'+end;
+        String uri = SEARCHENDPOINT+start+'&'+end+"&limit=1000";
         System.out.println("Trying to request "+ uri);
         String response = Request.Get(uri).execute().returnContent().toString();
         List<Relation> elements = Helper.parseResult(response);
@@ -63,7 +73,7 @@ public class Search {
     public List<Relation> call2() throws IOException {
         // The fluent API relieves the user from having to deal with manual deallocation of system
         // resources at the cost of having to buffer response content in memory in some case
-        String uri = SEARCHENDPOINT+start2+'&'+end2;
+        String uri = SEARCHENDPOINT+start2+'&'+end2+"&limit=1000";
         System.out.println("Trying to request "+ uri);
         String response = Request.Get(uri).execute().returnContent().toString();
         List<Relation> elements = Helper.parseResult(response);
