@@ -5,57 +5,16 @@ import com.ai.conceptnet5.services.Search;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
-import java.util.Iterator;
 import com.ai.com.ai.model.LexicalGroup;
 
-import com.sharethis.common.IOUtils;
-import com.sun.deploy.xml.XMLable;
-import com.sun.jna.StringArray;
-import com.sun.media.sound.RealTimeSequencerProvider;
-import com.sun.tools.javac.code.Attribute;
-import edu.stanford.nlp.ling.Label;
+
+import com.ai.sentenceranking.Hits;
+import com.ai.sentenceranking.Ranking;
+import com.ai.sentenceranking.SentenceRanking;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
-import edu.stanford.nlp.tagger.maxent.ReadDataTagged;
-import edu.stanford.nlp.trees.TreebankLanguagePack;
-import edu.stanford.nlp.trees.PennTreebankLanguagePack;
-import edu.stanford.nlp.trees.*;
-import java.util.Collection;
-import edu.stanford.nlp.parser.common.ParserQuery;
 import edu.stanford.nlp.ling.Sentence;
-
-
-import java.io.FileReader;
-import java.util.Iterator;
-
-import edu.stanford.nlp.util.ArraySet;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.PropertyConfigurator;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-
-import edu.stanford.nlp.ling.Sentence;
-import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
-import edu.stanford.nlp.process.CoreLabelTokenFactory;
-import edu.stanford.nlp.process.DocumentPreprocessor;
-import edu.stanford.nlp.process.PTBTokenizer;
-import edu.stanford.nlp.process.Tokenizer;
-import edu.stanford.nlp.process.TokenizerFactory;
-import edu.stanford.nlp.trees.GrammaticalStructure;
-import edu.stanford.nlp.trees.GrammaticalStructureFactory;
 import edu.stanford.nlp.trees.Tree;
-import edu.stanford.nlp.trees.TreePrint;
-import edu.stanford.nlp.trees.TreebankLanguagePack;
-import java.io.StringReader;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class Main {
 
@@ -65,8 +24,9 @@ public class Main {
 	// write your code her
         List<String> sentences = new ArrayList<>();
         System.out.println("Testing first concept net call");
-        String input1 = "penguin";
-        String input2 = "fly";
+        String input1 = "teach";
+        String input2 = "";
+        String[] words = {input1,input2};
 //        String input1 = "penguin";
 //        String input2 = "fly";
         try {
@@ -151,19 +111,38 @@ public class Main {
             System.out.println("Total relations:"+result.size());
 
 
-            sentences.addAll(getIndirectSentences(result));
+            sentences.addAll(getIndirectSentences(result,words));
 
-            for(String sentence: sentences){
-                System.out.println("New Sentence : " + sentence);
+//            for(String sentence: sentences){
+//                System.out.println("New Sentence : " + sentence);
+//            }
+
+            String join = "";
+            for(String sent : sentences){
+                join += sent;
             }
 
             //Rank sentences
-            //String res_path = "C:/"+TextRank.class.getProtectionDomain().getCodeSource().getLocation().getPath()+"com/ai/res" ;
-            try {
+            Hits rank;
+            rank = new Hits();
+            List<Ranking> rankHits = rank.rank(join);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            System.out.println("===========Top 1 sentences==========");
+            if(resultDirect.size()>0){
+                //Use direct realtions
+                System.out.println("1 | "+bestSentence(resultDirect,5));
+            }else{
+                System.out.println(rankHits.get(0).getWeight()+" | "+rankHits.get(0).getSentece());
             }
+
+
+
+//            SentenceRanking rk = new SentenceRanking();
+//            rankHits = rk.rank(join);
+//            System.out.println("===========Top 1 sentences==========");
+//            System.out.println(rankHits.get(0).getWeight()+"|"+rankHits.get(0).getSentece());
+//
+
 
 
         } catch (IOException e) {
@@ -172,17 +151,45 @@ public class Main {
         }
     }
 
+    public static String bestSentence(List<Relation> realtions,int min){
+
+        String sentence ="";
+        int longest = 0;
+        for(Relation rel: realtions) {
+            String[] text = splitSentence(rel.getSurfaceText());
+            if(text.length >= min){
+                //lsttext.add(text);
+                if(text.length>longest){
+                    //change longest
+                    longest = text.length;
+                    sentence = getSentence(text);
+                }
+            }
+        }
+        return sentence;
+    }
+
+    public static String getSentence(String[] text){
+        String result = "";
+        for(String w: text){
+            result += " " + w;
+        }
+        return result;
+    }
+
+
 
     public static void printRelations(List<Relation> relations){
         // Print Direct and Indirect Relations
         for(int i=0;i<relations.size();i++){
             System.out.println(relations.get(i));
         }
+
         System.out.println();
 
     }
 
-    public static List<String> getIndirectSentences(List<List<Relation>> result){
+    public static List<String> getIndirectSentences(List<List<Relation>> result,String[] input){
         // Parse and get Lexical of sentence
         // Try to create sentence with each group of relations
         List<String> sentences= new ArrayList<>();
@@ -212,13 +219,13 @@ public class Main {
 
         System.out.println("Generation random sentences");
 
-        for (int i=0;i<100;i++) {
-            sentences.add(mark.generateSentence(5));
+        for (int i=0;i<300;i++) {
+            sentences.add(mark.generateSentenceThanContains(5,input));
             //System.out.println("New Sentence : " + mark.generateSentence(5));
         }
 
-        System.out.println("=================================");
-        System.out.println("NEW RULESSSS");
+        //System.out.println("=================================");
+        //System.out.println("NEW RULESSSS");
         for(LexicalGroup group : lstLexical){
             group.inferRelations();
         }

@@ -4,6 +4,7 @@ package com.ai.com.ai.model;
  * Created by eduardosalazar1 on 1/6/16.
  */
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
 
@@ -107,6 +108,43 @@ public class Markov {
             text = generateSentence();
             lenght = text.size();
         }
-        return text.toString();
+
+        Iterator<String> el = text.iterator();
+        String result = "";
+        while(el.hasNext()){
+            result += " " +el.next();
+        }
+        return result;
+    }
+
+    public String generateSentenceThanContains(int min,String[] word) {
+
+        int lenght = 0;
+        boolean hasWords = false;
+        Vector<String> text = null;
+        String result="";
+        while(lenght<min || !hasWords){
+            text = generateSentence();
+            lenght = text.size();
+            int count = 0;
+
+            Iterator<String> el = text.iterator();
+            result = "";
+            while(el.hasNext()){
+                result += " " +el.next();
+            }
+            for(String w: word){
+                if(result.contains(w)){
+                    count++;
+                }
+            }
+            if(count == word.length)
+                hasWords = true;
+            else
+                hasWords = false;
+        }
+
+
+        return result;
     }
 }
